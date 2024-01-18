@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class KaraokeController {
-    private KaraokeService karaokeService;
+    private final KaraokeService karaokeService;
 
     @Autowired
     public KaraokeController(KaraokeService karaokeService) {
@@ -19,6 +19,7 @@ public class KaraokeController {
 
     @GetMapping("/favorites")
     public List<KaraokeUserFavoriteSong> findAll(){
+        System.out.println(karaokeService.findAll() + " entries found");
         return karaokeService.findAll();
     }
 
@@ -26,7 +27,7 @@ public class KaraokeController {
     public KaraokeUserFavoriteSong getUserSongByUuid(@PathVariable String uuid){
         KaraokeUserFavoriteSong karaokeUserFavoriteSong = karaokeService.findByUuid(uuid);
         if (karaokeUserFavoriteSong == null){
-            throw new RuntimeException("Song with user id" + uuid  + "entry not found!");
+            throw new RuntimeException("Song with user id " + uuid  + "entry not found!");
         }
         return karaokeUserFavoriteSong;
     }
